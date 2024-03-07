@@ -1,14 +1,60 @@
 import React, { useContext, useEffect } from "react";
 import authContext from "../context/authContext";
 import { Button } from "../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import googleicon from "../assets/google-icon.png";
 import Navbar from "../components/Navbar";
+import { auth, db } from "../config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { login } from "../utils/login";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const Landing = () => {
   //   const { bag, setBag } = useContext(authContext);
   //   console.log(bag);
+  const navigate = useNavigate();
+
+  const staffLogins = ["atharvaupare5@gmail.com"]; //redirect to kitchen if login mail belongs to this array
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log(user);
+
+      if (user)
+        if (user) {
+          if (staffLogins.includes(user.email)) {
+            navigate("/kitchen");
+          } else {
+            try {
+              const userDocRef = doc(collection(db, "users"), user.uid);
+              const userDoc = await getDoc(userDocRef);
+
+              if (!userDoc.exists()) {
+                const userData = {
+                  name: user.displayName,
+                  email: user.email,
+                  photoURL: user.photoURL,
+                  uid: user.uid,
+                };
+
+                await setDoc(userDocRef, userData);
+              }
+
+              navigate("/homepage");
+            } catch (error) {
+              console.error("Error processing authentication:", error);
+            }
+          }
+        } else {
+          // User is not authenticated
+          navigate("/errorpage");
+          console.log("User is not authenticated.");
+        }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <div>
@@ -22,7 +68,10 @@ const Landing = () => {
         </div>
         <div className=" h-[20rem] w-full flex flex-col items-center justify-center gap-6 ">
           <Link to="/" className="w-[80%] flex justify-center">
-            <Button className="h-14 mt-[20%] w-[90%]  text-white flex gap-x-2 items-center justify-center">
+            <Button
+              className="h-14 mt-[20%] w-[90%]  text-white flex gap-x-2 items-center justify-center"
+              onClick={login}
+            >
               <p className="font-medium text-xl">Login with Google</p>
               <img src={googleicon} alt="" className="mt-1" />
             </Button>
@@ -35,7 +84,9 @@ const Landing = () => {
         <div className="fade deskLanding h-[100vh] bg-no-repeat bg-cover">
           <Navbar />
           <div className=" flex flex-col  gap-8 w-[55%] ml-[10%] mt-[5%]  ">
-            <h1 className=" text-[3rem] font-bold">Inspect and switch to phone!</h1>
+            <h1 className=" text-[3rem] font-bold">
+              Inspect and switch to phone!
+            </h1>
             <div className=" flex flex-col">
               <p className=" text-[2rem] font-semibold text-[#0000008a]">
                 Local treasures await,
