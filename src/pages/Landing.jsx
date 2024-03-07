@@ -79,7 +79,7 @@ const Landing = () => {
           <div className="flex gap-2"></div>
         </div>
       </div>
-
+{/* 
       <div className="desk">
         <div className="fade deskLanding h-[100vh] bg-no-repeat bg-cover">
           <Navbar />
@@ -124,7 +124,7 @@ const Landing = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
