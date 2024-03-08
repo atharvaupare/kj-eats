@@ -22,7 +22,7 @@ const Kitchen = () => {
 
   return (
     <div>
-      <div>HomePage</div>
+      <div>Kitchen</div>
       <Button onClick={handleLogout}>Logout</Button>
     </div>
   );
