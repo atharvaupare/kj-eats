@@ -2,6 +2,8 @@ import { useState } from "react";
 import authContext from "./authContext";
 
 const AuthState = (props) => {
+  const [menuItems, setMenuItems] = useState([]);
+
   const [bag, setBag] = useState([
     {
       orderToken: "#ADADX",
@@ -46,7 +48,7 @@ const AuthState = (props) => {
   ]);
 
   return (
-    <authContext.Provider value={{ bag, setBag }}>
+    <authContext.Provider value={{ bag, setBag, menuItems, setMenuItems }}>
       {props.children}
     </authContext.Provider>
   );

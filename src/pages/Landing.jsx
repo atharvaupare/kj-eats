@@ -8,7 +8,8 @@ import Navbar from "../components/Navbar";
 import { auth, db } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { login } from "../utils/login";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { getMenu } from "../utils/getMenu";
 
 const Landing = () => {
   //   const { bag, setBag } = useContext(authContext);
@@ -16,6 +17,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   const staffLogins = ["atharvaupare5@gmail.com"]; //redirect to kitchen if login mail belongs to this array
+  const { menuItems, setMenuItems } = useContext(authContext);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -29,6 +31,7 @@ const Landing = () => {
             try {
               const userDocRef = doc(collection(db, "users"), user.uid);
               const userDoc = await getDoc(userDocRef);
+              // console.log(userDoc.data)
 
               if (!userDoc.exists()) {
                 const userData = {
@@ -40,6 +43,21 @@ const Landing = () => {
 
                 await setDoc(userDocRef, userData);
               }
+
+              const newMenuItems = await getMenu();
+              const uniqueNewMenuItems = newMenuItems.filter(
+                (newItem) =>
+                  !menuItems.some(
+                    (existingItem) => existingItem.id === newItem.id
+                  )
+              );
+              setMenuItems((prevMenuItems) => [
+                ...prevMenuItems,
+                ...uniqueNewMenuItems,
+              ]);
+
+              console.log(menuItems);
+              console.log(newMenuItems);
 
               navigate("/homepage");
             } catch (error) {
@@ -79,7 +97,7 @@ const Landing = () => {
           <div className="flex gap-2"></div>
         </div>
       </div>
-{/* 
+      {/* 
       <div className="desk">
         <div className="fade deskLanding h-[100vh] bg-no-repeat bg-cover">
           <Navbar />
