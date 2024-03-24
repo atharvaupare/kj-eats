@@ -20,20 +20,20 @@ const NavbarMobile = () => {
   };
 
   return (
-    <div className="w-full h-[12%] flex flex-row items-center justify-between px-2 bg-darkOrange absolute bottom-0">
+    <div className="w-full h-[10%] flex flex-row items-center justify-between px-2 bg-darkOrange absolute bottom-0">
       <div
-        className={`flex flex-col items-center justify-center gap-y-1 w-[33%] ${
+        className={`flex flex-col items-center justify-center  w-[33%] ${
           selectedOption === "Orders"
             ? "text-white transtion ease-in duration-300"
             : ""
         }`}
         onClick={() => handleOptionClick("Orders")}
       >
-        <img src={orders} className="h-8 w-8 aspect-square" alt="Orders"></img>
-        <div className="bg-gray-500 text-xl font-bold ">Orders</div>
+        <img src={orders} className="h-7 w-7 aspect-square" alt="Orders"></img>
+        <div className="bg-gray-500 text-lg font-semibold ">Orders</div>
       </div>
       <div
-        className={`flex flex-col items-center justify-center gap-y-1 w-[33%] ${
+        className={`flex flex-col items-center justify-center w-[33%] ${
           selectedOption === "Profile"
             ? "text-white transtion ease-in duration-300"
             : ""
@@ -42,22 +42,22 @@ const NavbarMobile = () => {
       >
         <img
           src={profile}
-          className="h-8 w-8 aspect-square"
+          className="h-7 w-7 aspect-square"
           alt="Profile"
           onClick={handleLogout}
         ></img>
-        <div className="bg-gray-500 text-xl font-bold ">Profile</div>
+        <div className="bg-gray-500 text-lg font-semibold ">Profile</div>
       </div>
       <div
-        className={`flex flex-col items-center justify-center gap-y-1 w-[33%] ${
+        className={`flex flex-col items-center justify-center  w-[33%] ${
           selectedOption === "Cart"
             ? "text-white transtion ease-in duration-300"
             : ""
         }`}
         onClick={() => handleOptionClick("Cart")}
       >
-        <img src={cart} className="h-8 w-8 aspect-square" alt="Cart"></img>
-        <div className="bg-gray-500 text-xl font-bold ">Cart</div>
+        <img src={cart} className="h-7 w-7 aspect-square" alt="Cart"></img>
+        <div className="bg-gray-500 text-lg font-semibold ">Cart</div>
       </div>
     </div>
   );

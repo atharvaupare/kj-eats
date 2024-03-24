@@ -204,34 +204,33 @@ const HomePage = () => {
     }
   }, [searchQuery, menuItems]);
 
-  const handleCheckout = () => {
-    navigate("/checkout");
-  };
-  // Logout function
-  const handleLogout = () => {
-    logout(navigate);
-  };
+  // const handleCheckout = () => {
+  //   navigate("/checkout");
+  // };
+  // // Logout function
+  // const handleLogout = () => {
+  //   logout(navigate);
+  // };
 
   return (
     <div className="w-full h-screen">
-      <div className="w-full h-[8%] flex items-center justify-center bg-white text-3xl font-semibold ">
-        <div className="text-gray-500">Menu</div>
+      <div className="w-full h-[4%] flex items-center justify-center bg-white text-xl font-semibold ">
+        <div className="text-gray-300">Welcome to KJ Eats!</div>
       </div>
-      <div className="w-full h-[8%] flex items-center justify-between bg-white text-3xl font-semibold border-b-2 border-darkOrange px-4 gap-x-2 pb-4">
+      <div className="w-full h-[8%] flex items-center justify-between bg-white text-3xl font-semibold border-b-2 border-darkOrange px-4 gap-x-2 pb-4 bg-darkOrange ">
         {/* <div className="text-gray-500">Menu</div> */}
-
         <input
           type="text"
           id="search"
           placeholder="Search..."
-          className="px-4 py-2 border border-gray-200 rounded-2xl focus:outline-none focus:border-darkOrange w-[90%] h-full "
+          className="px-4 py-2 text-lg border border-gray-200 rounded-3xl focus:outline-none focus:border-darkOrange w-[90%] h-full "
           onChange={handleSearch}
         />
         <Button className={"h-full"}>
           <img src={search} className="h-full w-full px-2"></img>
         </Button>
       </div>
-      <div className="h-[72%] overflow-y-auto">
+      <div className="h-[78%] overflow-y-auto px-4">
         <ul>
           {filteredItems.map((item) => (
             <li key={item.id}>
