@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: "Poppins", sans-serif;
+}
+
 @keyframes fadeSide {
   from {
     opacity: 0;
@@ -49,7 +53,6 @@
 .deskLanding {
   background-image: url(./assets/bgLanding.png);
 }
-
 
 @media screen and (orientation: landscape) {
   body {
