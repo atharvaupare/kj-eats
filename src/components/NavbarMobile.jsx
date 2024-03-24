@@ -3,12 +3,20 @@ import React, { useState } from "react";
 import orders from "../assets/bill.png";
 import profile from "../assets/profile.png";
 import cart from "../assets/cart.png";
+import { logout } from "../utils/logout";
+import { useNavigate } from "react-router-dom";
 
 const NavbarMobile = () => {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(navigate);
   };
 
   return (
@@ -36,6 +44,7 @@ const NavbarMobile = () => {
           src={profile}
           className="h-8 w-8 aspect-square"
           alt="Profile"
+          onClick={handleLogout}
         ></img>
         <div className="bg-gray-500 text-xl font-bold ">Profile</div>
       </div>
