@@ -230,17 +230,34 @@ const HomePage = () => {
           <img src={search} className="h-full w-full px-2"></img>
         </Button>
       </div>
-      <div className="h-[78%] overflow-y-auto px-4">
-        <ul>
-          {filteredItems.map((item) => (
-            <li key={item.id}>
-              <h3>{item.name}</h3>
-              <p>Cuisine: {item.cuisine}</p>
-              <p>Price: {item.price}</p>
-              <p>Stock: {item.stock ? "Available" : "Out of Stock"}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="h-[80%] overflow-y-auto  gap-y-4 flex items-center justify-center w-full flex-col pt-32">
+        {filteredItems.map((item) => (
+          // <li key={item.id}>
+          //
+          // </li>
+          <div className="w-[80%] h-[70%] p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-2 ">
+            <div className="flex justify-between items-start  text-2xl font-semibold">
+              <p>{item.name}</p>
+
+              <p className="p-2 text-base bg-darkOrange rounded-xl">
+                {item.cuisine}
+              </p>
+            </div>
+            <div className="flex justify-between ">
+              <div className="flex items-center gap-y-4">
+                <span className=" text-3xl">₹</span>
+                <span className="text-lg">{item.price}</span>
+              </div>
+              <div className="flex gap-x-2">
+                <Button className={"px-3"} onClick={() => {console.log("hello")}}>-</Button>
+                <Button className={"px-3"}>+</Button>
+             
+              </div>
+            </div>
+
+            <p>Stock: {item.stock ? "Available" : "Out of Stock"}</p>
+          </div>
+        ))}
       </div>
 
       <NavbarMobile />

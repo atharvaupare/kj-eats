@@ -7,21 +7,21 @@ const App = () => {
   const routings = createBrowserRouter(routes);
 
   // Function to detect and enforce portrait mode
-  const enforcePortraitMode = () => {
-    const isPortrait = () => window.matchMedia("(orientation: portrait)").matches;
-    const lockOrientation = () => {
-      if (!isPortrait()) {
-        alert("Please rotate your device to portrait mode for better experience.");
-      }
-    };
+  // const enforcePortraitMode = () => {
+  //   const isPortrait = () => window.matchMedia("(orientation: portrait)").matches;
+  //   const lockOrientation = () => {
+  //     if (!isPortrait()) {
+  //       alert("Please rotate your device to portrait mode for better experience.");
+  //     }
+  //   };
 
-    lockOrientation(); // Initially check orientation
-    window.addEventListener("orientationchange", lockOrientation); // Listen for orientation changes
-  };
+  //   lockOrientation(); // Initially check orientation
+  //   window.addEventListener("orientationchange", lockOrientation); // Listen for orientation changes
+  // };
 
-  useEffect(() => {
-    enforcePortraitMode(); // Call the function on component mount
-  }, []);
+  // useEffect(() => {
+  //   enforcePortraitMode(); // Call the function on component mount
+  // }, []);
 
   return (
     <div>
