@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import orders from "../assets/bill.png";
 import profile from "../assets/profile.png";
-import cart from "../assets/cart.png";
+import cartimg from "../assets/cart.png";
 import { logout } from "../utils/logout";
 import { useNavigate } from "react-router-dom";
 
-const NavbarMobile = () => {
+const NavbarMobile = ({ cart }) => {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionClick = (option) => {
@@ -54,9 +54,13 @@ const NavbarMobile = () => {
             ? "text-white transtion ease-in duration-300"
             : ""
         }`}
-        onClick={() => handleOptionClick("Cart")}
+        onClick={() => {
+          handleOptionClick("Cart");
+          console.log(cart)
+          navigate("/cart")
+        }}
       >
-        <img src={cart} className="h-7 w-7 aspect-square" alt="Cart"></img>
+        <img src={cartimg} className="h-7 w-7 aspect-square" alt="Cart"></img>
         <div className="bg-gray-500 text-lg font-semibold ">Cart</div>
       </div>
     </div>

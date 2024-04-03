@@ -21,6 +21,8 @@ const debounce = (func, delay) => {
 const HomePage = () => {
   const navigate = useNavigate();
   const { menuItems, setMenuItems } = useContext(AuthContext); // TODO: uncomment later
+  const { cart, setCart } = useContext(AuthContext); // TODO: uncomment later
+
   // const menuItems = [
   //   {
   //     cuisine: "Chinese",
@@ -212,34 +214,87 @@ const HomePage = () => {
   //   logout(navigate);
   // };
 
+  const handleAddToCart = (item) => {
+    // Clone the cart object
+    const updatedCart = { ...cart };
+    console.log(updatedCart);
+
+    // Find the index of the item in cartItems
+    const existingItemIndex = updatedCart.cartItems.findIndex(
+      (cartItem) => cartItem.name === item.name
+    );
+
+    if (existingItemIndex !== -1) {
+      // If item already exists in cart, update its quantity
+      updatedCart.cartItems[existingItemIndex].quantity += 1;
+    } else {
+      // If item is not in cart, add it to cartItems
+      updatedCart.cartItems.push({ ...item, quantity: 1 });
+    }
+
+    // Update the totalAmount
+    updatedCart.totalAmount += item.price;
+
+    // Update the cart state
+    setCart(updatedCart);
+  };
+
+  const handleRemoveFromCart = (item) => {
+    const updatedCart = { ...cart };
+
+    console.log(updatedCart);
+
+    const itemIndexToRemove = updatedCart.cartItems.findIndex(
+      (cartItem) => cartItem.name === item.name
+    );
+    console.log(itemIndexToRemove);
+
+    if (itemIndexToRemove !== -1) {
+      if (updatedCart.cartItems[itemIndexToRemove].quantity > 1) {
+        updatedCart.cartItems[itemIndexToRemove].quantity -= 1;
+      } else {
+        updatedCart.cartItems.splice(itemIndexToRemove, 1);
+      }
+
+      updatedCart.totalAmount -= item.price;
+      console.log(updatedCart);
+      setCart(updatedCart);
+    }
+  };
+
   return (
     <div className="w-full h-screen">
-      <div className="w-full h-[4%] flex items-center justify-center bg-white text-xl font-semibold ">
+      <div className="w-full h-[8%] flex items-center justify-center  bg-darkOrange text-xl font-semibold ">
         <div className="text-gray-300">Welcome to KJ Eats!</div>
       </div>
-      <div className="w-full h-[8%] flex items-center justify-between bg-white text-3xl font-semibold border-b-2 border-darkOrange px-4 gap-x-2 pb-4 bg-darkOrange ">
+      <div className="w-full h-[8%] flex items-center justify-between  bg-darkOrange text-3xl font-semibold border-b-2 shadow-md px-4 gap-x-2 pb-4 bg-darkOrange ">
         {/* <div className="text-gray-500">Menu</div> */}
         <input
           type="text"
           id="search"
           placeholder="Search..."
-          className="px-4 py-2 text-lg border border-gray-200 rounded-3xl focus:outline-none focus:border-darkOrange w-[90%] h-full "
+          className="px-4 py-2 text-lg border border-gray-200 rounded-3xl focus:outline-none focus:border-black w-[90%] h-full "
           onChange={handleSearch}
         />
-        <Button className={"h-full"}>
+        <Button
+          className={"h-full"}
+          onClick={() => {
+            console.log(cart);
+          }}
+        >
           <img src={search} className="h-full w-full px-2"></img>
         </Button>
       </div>
-      <div className="h-[80%] overflow-y-auto  gap-y-4 flex items-center justify-center w-full flex-col pt-32">
+      <div className="h-[74%] overflow-y-auto  gap-y-4 flex items-center  w-full flex-col pt-2">
         {filteredItems.map((item) => (
           // <li key={item.id}>
           //
           // </li>
-          <div className="w-[80%] h-[70%] p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-2 ">
+          <div className="w-[74%] h-fit p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-2 ">
             <div className="flex justify-between items-start  text-2xl font-semibold">
               <p>{item.name}</p>
 
-              <p className="p-2 text-base bg-darkOrange rounded-xl">
+              <p className="p-2 text-base bg-[#EAAB4D] rounded-xl">
                 {item.cuisine}
               </p>
             </div>
@@ -249,9 +304,22 @@ const HomePage = () => {
                 <span className="text-lg">{item.price}</span>
               </div>
               <div className="flex gap-x-2">
-                <Button className={"px-3"} onClick={() => {console.log("hello")}}>-</Button>
-                <Button className={"px-3"}>+</Button>
-             
+                {item.stock && (
+                  <>
+                    <Button
+                      className={"px-3 active:bg-white"}
+                      onClick={() => handleRemoveFromCart(item)}
+                    >
+                      -
+                    </Button>
+                    <Button
+                      className={"px-3 active:bg-white"}
+                      onClick={() => handleAddToCart(item)}
+                    >
+                      +
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
 
@@ -260,7 +328,7 @@ const HomePage = () => {
         ))}
       </div>
 
-      <NavbarMobile />
+      <NavbarMobile cart={cart} />
       {/* <Button onClick={handleLogout}>Logout</Button> */}
     </div>
   );

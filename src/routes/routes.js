@@ -1,3 +1,4 @@
+import Cart from "../pages/Cart";
 import HomePage from "../pages/HomePage";
 import Kitchen from "../pages/Kitchen";
 import Landing from "../pages/Landing";
@@ -14,6 +15,10 @@ const routes = [
   {
     path: "/kitchen",
     element: <Kitchen />,
+  },
+  {
+    path: "/cart",
+    element: <Cart/>,
   },
 ];
 

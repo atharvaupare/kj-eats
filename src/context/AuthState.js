@@ -152,55 +152,31 @@ const AuthState = (props) => {
           cuisine: "Japanese",
           name: "Miso Soup",
           price: 70,
-          stock: true,
+          stock: false,
         },
   ]);
 
-  const [bag, setBag] = useState([
+  const [cart, setCart] = useState(
     {
-      orderToken: "#ADADX",
-      orderItemName: "Green Kurta",
-      orderCategory: "Clothes",
-      orderPrice: 500,
-      onGoing: false,
-      orderDate: "24/01/2024, 08:00pm",
+      cartItems: [
+        // {
+        //   name: "pav bhaji",
+        //   price: 50,
+        //   quantity: 4,
+        // }
+        // ,{
+        //   name: "Chana Masala",
+        //   price: 100,
+        //   quantity: 4,
+        // }
+      ],
+      totalAmount: 0
     },
-    {
-      orderToken: "#ADADX",
-      orderItemName: "Yellow Kurta",
-      orderCategory: "Ethnic",
-      orderPrice: 5000,
-      onGoing: true,
-      orderDate: "31/01/2024, 04:00pm",
-    },
-    {
-      orderToken: "#ADADX1",
-      orderItemName: "Kurta",
-      orderCategory: "Clothes",
-      orderPrice: 500,
-      onGoing: false,
-      orderDate: "24/01/2024, 08:00pm",
-    },
-    {
-      orderToken: "#ADADX2",
-      orderItemName: "Kurta2",
-      orderCategory: "Ethnic",
-      orderPrice: 5000,
-      onGoing: false,
-      orderDate: "20/01/2024, 04:00pm",
-    },
-    {
-      orderToken: "#ADADX3",
-      orderItemName: "Kurta3",
-      orderCategory: "Marriage",
-      orderPrice: 500,
-      onGoing: true,
-      orderDate: "30/01/2024, 02:00pm",
-    },
-  ]);
+    
+  );
 
   return (
-    <authContext.Provider value={{ bag, setBag, menuItems, setMenuItems }}>
+    <authContext.Provider value={{ cart, setCart, menuItems, setMenuItems }}>
       {props.children}
     </authContext.Provider>
   );

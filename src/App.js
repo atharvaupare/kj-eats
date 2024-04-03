@@ -3,6 +3,7 @@ import routes from "./routes/routes";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AuthState from "./context/AuthState";
 
+
 const App = () => {
   const routings = createBrowserRouter(routes);
 
@@ -26,7 +27,9 @@ const App = () => {
   return (
     <div>
       <AuthState>
-        <RouterProvider router={routings}></RouterProvider>
+      
+          <RouterProvider router={routings}></RouterProvider>
+     
       </AuthState>
     </div>
   );
