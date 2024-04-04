@@ -27,7 +27,12 @@ const NavbarMobile = ({ cart }) => {
             ? "text-white transtion ease-in duration-300"
             : ""
         }`}
-        onClick={() => handleOptionClick("Orders")}
+        // onClick={() => handleOptionClick("Orders")}
+        onClick={() => {
+          handleOptionClick("Orders");
+          // console.log(cart)
+          navigate("/orders")
+        }}
       >
         <img src={orders} className="h-7 w-7 aspect-square" alt="Orders"></img>
         <div className="bg-gray-500 text-lg font-semibold ">Orders</div>

@@ -2,6 +2,7 @@ import Cart from "../pages/Cart";
 import HomePage from "../pages/HomePage";
 import Kitchen from "../pages/Kitchen";
 import Landing from "../pages/Landing";
+import OrderPage from "../pages/OrderPage";
 
 const routes = [
   {
@@ -19,6 +20,10 @@ const routes = [
   {
     path: "/cart",
     element: <Cart/>,
+  },
+  {
+    path: "/orders",
+    element: <OrderPage></OrderPage>,
   },
 ];
 
