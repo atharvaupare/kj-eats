@@ -1,23 +1,74 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
+import { getAuth } from "firebase/auth";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import "./App.css";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
+import { Button } from "../components/Button";
+import authContext from "../context/authContext";
 
-function ExpandedList({keyName, value}){
-  return <li>{keyName} : {value}</li>
-}
+const OrderPage = () => {
+  const [showCartItems, setShowCartItems] = useState(false);
+  const [orders, setOrders] = useState([{}]);
+  const {setTokenNo} = useContext(authContext);
 
-function OrderCard({orderID, timeElapsed, order}){
-  const [expand, setExpand] = useState(false);
+  const toggleCartItems = () => {
+    setShowCartItems((prevShowCartItems) => !prevShowCartItems);
+  };
 
-  function handleClick(){ 
-    setExpand((prev) => !prev)
-  }
+  const calculateTimeDifference = (orderTime) => {
+    const currentTime = Date.now();
+    const differenceInMs = currentTime - orderTime;
+    const differenceInMins = Math.round(differenceInMs / (1000 * 60));
+    return differenceInMins;
+  };
 
   const navigate = useNavigate();
+  const auth = getAuth();
+  const currUser = auth.currentUser;
+  // console.log(currUser)
 
-  return <div className="w-60 p-2 border border-black">
-     <div
+  useEffect(() => {
+    if (currUser) {
+      const fetchOrders = async () => {
+        try {
+          // Create a query to fetch documents from "kitchen" collection where name === currentUser.name
+          const q = query(
+            collection(db, "kitchen"),
+            where("uid", "==", currUser.uid)
+          );
+          const querySnapshot = await getDocs(q);
+
+          // Map the documents to an array of orders
+          const ordersData = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          // console.log(ordersData)
+          setOrders(ordersData);
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+        }
+      };
+
+      fetchOrders();
+    }
+  }, []);
+
+  const viewTokenHandler = (tokenId) => {
+    console.log("hi");
+    setTokenNo(tokenId);
+    navigate('/token')
+  };
+
+  return (
+    <div className="w-full h-screen mob fadeSide">
+       <div
         className="absolute top-[2%] text-2xl font-semibold bg-white rounded-md left-[2%] p-1 w-1/6 text-center"
         onClick={() => {
           navigate("/homepage");
@@ -25,38 +76,62 @@ function OrderCard({orderID, timeElapsed, order}){
       >
         &#x2190;
       </div>
-    <div className="flex justify-between border-y">
-      <div>
-        <p>#{orderID}</p>
-        <p>{timeElapsed} mins</p>
+      <div
+        className="absolute top-[2%] text-2xl font-semibold bg-white rounded-md left-[2%] p-1 w-1/6 text-center"
+        onClick={() => {
+          navigate("/homepage");
+        }}
+      >
+        &#x2190;
       </div>
-      <button>Show Coupon</button>
+
+      <div className="w-full h-[10%] flex items-center justify-center bg-darkOrange text-xl font-semibold ">
+        <div className="text-black font-semibold text-3xl">Orders</div>
+      </div>
+
+      <div className="h-screen overflow-y-auto  gap-y-4 flex items-center w-full flex-col pt-8">
+        {orders.map((order, index) => (
+          <div
+            key={index}
+            className="w-[85%] h-fit p-4 bg-[#E9C48B] rounded-xl flex flex-col items-center gap-y-1 text-3xl font-semibold"
+          >
+            <div className="flex text-lg font-semibold justify-between w-full h-fit items-start">
+              <p>Token No. {order.tokenId}</p>
+              {order.status ? (
+                <p>Status: Fulfilled</p>
+              ) : (
+                <p>Status: Unfulfilled</p>
+              )}
+            </div>
+            <div className="flex text-base justify-between items-center w-full h-fit text-dark-main">
+              <p>{calculateTimeDifference(order.timestamp)} min ago</p>
+              <Button className={"px-1.5 py-2 rounded-md"}   onClick={() => viewTokenHandler(order.tokenId)}>View Ticket</Button>
+            </div>
+            <div></div>
+            <div
+              className="h-fit w-full text-xs text-end flex justify-between"
+              onClick={toggleCartItems}
+            >
+              <p>Total Amount: {order.cartDetails?.totalAmount}</p>
+              <p> {showCartItems ? "Hide Cart Items ⬆️" : "Show More ⬇️"}</p>
+            </div>
+            {showCartItems && (
+              <div className="w-full text-xs text-end ">
+                <div className="flex flex-col w-full gap-y-2">
+                  {order.cartDetails.cartItems.map((item, index) => (
+                    <div key={index} className="flex justify-between w-full text-xs text-darkgray">
+                      <p>{item.name} x {item.quantity}</p>
+                      <p>${item.price}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
-    <div className="flex flex-col items-end">
-      <button onClick={handleClick}>🔽</button>
-      {expand ? (<ul className="self-start">
-        {Object.entries(order).map(([key, value], index) => <ExpandedList key={index} keyName={key} value={value}/>)}
-      </ul>): (<p></p>)}
-    </div>
-  </div>
-}
+  );
+};
 
-const temp = [
-  {"Vada Pav":2, "Pepsi":1},
-  {"Rajma":4, "Shikanji":4, "Salad":2},
-  {"Rasmalai":8}
-];
-
-function Orders(){
-  return <div className="flex flex-col gap-2">
-    <OrderCard orderID={3894790137} timeElapsed={7} order={temp[0]}/>
-    <OrderCard orderID={3894790137} timeElapsed={5} order={temp[1]}/>
-    <OrderCard orderID={3894790137} timeElapsed={15} order={temp[2]}/>
-  </div>
-}
-
-export default function OrderPage(){
-  return <div className="w-screen flex justify-center my-4">
-    <Orders />
-  </div>;
-}
+export default OrderPage;

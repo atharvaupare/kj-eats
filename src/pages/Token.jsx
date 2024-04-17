@@ -12,7 +12,7 @@ const Ticket = () => {
   return (
     <>
         <div
-        className="absolute top-[2%] text-2xl font-semibold bg-white rounded-md left-[2%] p-1 w-1/6 text-center"
+        className="absolute top-[2%] text-2xl font-semibold bg-white rounded-md left-[2%] p-1 w-1/6 text-center mob fadeSide"
         onClick={() => {
           navigate("/homepage");
         }}
