@@ -88,7 +88,7 @@ const Checkout = () => {
           Pay at Counter
           <img src={counter} className="aspect-square h-20 w-20"></img>
         </div>
-        <div className="w-[65%] h-[40%] p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-4 items-center text-3xl font-semibold">
+        <div className="w-[65%] h-[40%] p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-4 items-center text-3xl font-semibold " onClick={handleCheckout}>
           Pay via
           <img src={upi} className=" h-30"></img>
         </div>
