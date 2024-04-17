@@ -6,6 +6,7 @@ import OrderPage from "../pages/OrderPage";
 import Test from "../pages/Test";
 import Checkout from "../pages/Checkout";
 import Token from "../pages/Token";
+import Profile from "../pages/Profile";
 
 const routes = [
   {
@@ -39,6 +40,10 @@ const routes = [
   {
     path: "/token",
     element: <Token></Token>,
+  },
+  {
+    path: "/profile",
+    element: <Profile></Profile>,
   },
 ];
 

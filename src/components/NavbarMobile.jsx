@@ -15,9 +15,9 @@ const NavbarMobile = ({ cart }) => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout(navigate);
-  };
+  // const handleLogout = () => {
+  //   logout(navigate);
+  // };
 
   return (
     <div className="w-full h-[10%] flex flex-row items-center justify-between px-2 bg-darkOrange absolute bottom-0">
@@ -43,13 +43,18 @@ const NavbarMobile = ({ cart }) => {
             ? "text-white transtion ease-in duration-300"
             : ""
         }`}
-        onClick={() => handleOptionClick("Profile")}
+        onClick={() => {
+        handleOptionClick("Profile");
+        navigate("/profile")
+      }
+    }
+        
       >
         <img
           src={profile}
           className="h-7 w-7 aspect-square"
           alt="Profile"
-          onClick={handleLogout}
+          // onClick={handleLogout}
         ></img>
         <div className="bg-gray-500 text-lg font-semibold ">Profile</div>
       </div>
