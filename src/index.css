@@ -54,15 +54,4 @@ body {
   background-image: url(./assets/bgLanding.png);
 }
 
-@media screen and (orientation: landscape) {
-  body {
-    transform: rotate(90deg);
-    transform-origin: top left;
-    width: 100vh; /* Adjust based on your design */
-    height: 100vw; /* Adjust based on your design */
-    overflow-x: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-}
+

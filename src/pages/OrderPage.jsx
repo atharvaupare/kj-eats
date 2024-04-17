@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import "./App.css";
 
 function ExpandedList({keyName, value}){
@@ -13,7 +14,17 @@ function OrderCard({orderID, timeElapsed, order}){
     setExpand((prev) => !prev)
   }
 
+  const navigate = useNavigate();
+
   return <div className="w-60 p-2 border border-black">
+     <div
+        className="absolute top-[2%] text-2xl font-semibold bg-white rounded-md left-[2%] p-1 w-1/6 text-center"
+        onClick={() => {
+          navigate("/homepage");
+        }}
+      >
+        &#x2190;
+      </div>
     <div className="flex justify-between border-y">
       <div>
         <p>#{orderID}</p>

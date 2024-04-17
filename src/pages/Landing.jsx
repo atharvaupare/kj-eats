@@ -18,10 +18,13 @@ const Landing = () => {
 
   const staffLogins = ["atharvaupare5@gmail.com"]; //redirect to kitchen if login mail belongs to this array
   const { menuItems, setMenuItems } = useContext(authContext);
+  const {currUser, setCurrUser} = useContext(authContext)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       console.log(user);
+      setCurrUser(user);
+
 
       if (user)
         if (user) {

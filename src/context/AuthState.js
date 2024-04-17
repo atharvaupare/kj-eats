@@ -156,6 +156,9 @@ const AuthState = (props) => {
         },
   ]);
 
+  const [currUser, setCurrUser] = useState({})
+  const [tokenNo, setTokenNo] = useState()
+
   const [cart, setCart] = useState(
     {
       cartItems: [
@@ -176,7 +179,7 @@ const AuthState = (props) => {
   );
 
   return (
-    <authContext.Provider value={{ cart, setCart, menuItems, setMenuItems }}>
+    <authContext.Provider value={{ cart, setCart, menuItems, setMenuItems, currUser, setCurrUser , tokenNo, setTokenNo}}>
       {props.children}
     </authContext.Provider>
   );

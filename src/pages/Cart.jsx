@@ -34,16 +34,12 @@
 //           <p className="text-xl">Cart is empty</p>
 //         </div>
 //       )}
-    
-     
 
- 
 //     </div>
 //   )
 // }
 
 // export default Cart
-
 
 import React, { useContext } from "react";
 import authContext from "../context/authContext";
@@ -114,16 +110,28 @@ const Cart = () => {
       >
         &#x2190;
       </div>
+
+      {cart?.cartItems?.length > 0 && (
+        <div
+          className="absolute bottom-[2%] text-2xl font-semibold bg-darkOrange rounded-md right-[08%] px-10 py-2.5 w-30 text-center"
+          onClick={() => {
+            navigate("/checkout");
+          }}
+        >
+          Checkout &#8594;
+        </div>
+      )}
+
       <div className="w-full h-[10%] flex items-center justify-center bg-darkOrange text-xl font-semibold ">
         <div className="text-black font-semibold text-3xl">Cart</div>
       </div>
-      {cart.cartItems.length > 0 ? (
-        <div classNmae="h-[74%] overflow-y-auto  gap-y-4 flex items-center justify-center  w-full flex-col pt-2">
+      {cart?.cartItems?.length > 0 ? (
+        <div className="h-[74%] overflow-y-auto  gap-y-4 flex items-center   w-full flex-col pt-8">
           {/* Render cart items */}
           {cart.cartItems.map((item, index) => (
             <div
               key={index}
-              className="w-[85%] h-fit p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-2 my-3 ml-8"
+              className="w-[85%] h-fit p-4 bg-[#E9C48B] rounded-xl flex flex-col  justify-center gap-y-2"
             >
               <div className="flex justify-between items-start  text-2xl font-semibold">
                 <p>{item.name}</p>
@@ -144,13 +152,17 @@ const Cart = () => {
                   {item.stock && (
                     <>
                       <Button
-                        className={"px-4 py-2 w-12 h-fit  active:bg-white text-xl self-center"}
+                        className={
+                          "px-4 py-2 w-12 h-fit  active:bg-white text-xl self-center"
+                        }
                         onClick={() => handleRemoveFromCart(item)}
                       >
                         -
                       </Button>
                       <Button
-                        className={"px-4 py-2 h-fit w-12 active:bg-white text-xl self-center"}
+                        className={
+                          "px-4 py-2 h-fit w-12 active:bg-white text-xl self-center"
+                        }
                         onClick={() => handleAddToCart(item)}
                       >
                         +
@@ -161,7 +173,7 @@ const Cart = () => {
               </div>
             </div>
           ))}
-          <div className="w-fit h-fit p-4 bg-[#E9C48B] rounded-xl gap-y-2 my-3 ml-8 font-semibold">
+          <div className="w-fit h-fit p-4 bg-[#E9C48B] rounded-xl gap-y-2 my-3 ml-8 font-semibold self-start">
             Total Amount: {cart.totalAmount}
           </div>
         </div>

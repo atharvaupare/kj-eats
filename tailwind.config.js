@@ -14,12 +14,16 @@ module.exports = {
         "dark-main": "#2b2f42",
         "operator-message-bg": "#f2f2f2",
         ghostwhite: "#f5f6fa",
+        'sideBar': '#f9f6ef',
+      'sideBarHover' : '#f6be94',
+      'sideBarLogout' : '#e97c33'
       },
     },
     fontFamily: {
       inter: "Inter",
       "open-sans": "'Open Sans'",
       roboto: "Roboto",
+      
     },
   },
   plugins: [],
